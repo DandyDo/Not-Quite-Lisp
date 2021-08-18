@@ -1,27 +1,43 @@
 const fs = require('fs');
 
-fs.readFile('./input.txt', (err, data) => {
-    if (err) {
-        console.log('File not found.');
-    }
+function part1() {
+    fs.readFile('./input.txt', (err, data) => {
+        if (err) {
+            console.log('File not found.');
+        }
 
-    // Start timer
-    console.time('Timer');
+        // Start timer
+        console.time('Timer');
 
-    // Solution
-    const arr = data.toString().split('');
-    let floor = 0;
+        // Solution
+        const arr = data.toString().split('');
+        let floor = 0;
+        let basement = false;
 
-    for (let i of arr) {
-        if (i == '(')
-            floor++;
+        for (let [i, direction] of arr.entries()) {
+            if (direction === '(')
+                floor++;
+            
+            if (direction === ')') {
+                floor--;
+
+                if(basement === false && floor === -1){
+                    basement = true;
+                    part2(i + 1);
+                }           
+            }
+        }
         
-        if (i == ')')
-            floor--;
-    }
+        // Result
+        console.log('The directions says that Santa should go to floor:', floor);
 
-    // End timer
-    console.log(floor);
+        // End timer
+        console.timeEnd('Timer');
+    })
+}
 
-    console.timeEnd('Timer');
-})
+function part2(index) {
+    console.log('Santa entered the basement for the first time at position:', index)
+}
+
+part1();
