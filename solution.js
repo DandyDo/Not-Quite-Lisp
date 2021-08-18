@@ -5,9 +5,23 @@ fs.readFile('./input.txt', (err, data) => {
         console.log('File not found.');
     }
 
+    // Start timer
     console.time('Timer');
 
-    // Code here
+    // Solution
+    const arr = data.toString().split('');
+    let floor = 0;
+
+    for (let i of arr) {
+        if (i == '(')
+            floor++;
+        
+        if (i == ')')
+            floor--;
+    }
+
+    // End timer
+    console.log(floor);
 
     console.timeEnd('Timer');
 })
